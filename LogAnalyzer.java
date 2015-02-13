@@ -67,6 +67,27 @@ public class LogAnalyzer
         return contAcces;
         
     }
+    /**
+     * Devuelve la hora en la que se han registrado mas entradas al 
+     * servidor
+     */
+    
+    public int busiestHour(){
+        int hour = 0;
+        int cont = 0;
+        int maxCount = 0;
+        if(hourlyused){
+            while(cont < hourCounts.length){
+                if(hourCounts[cont]>maxCount){
+                    maxCount = hourCounts[cont];
+                    hour = cont;
+                }
+                cont++;
+            }
+            
+        }
+        return hour;
+    }
 
     /**
      * Print the hourly counts.
