@@ -109,6 +109,27 @@ public class LogAnalyzer
         }
         return hour;
     }
+    /**
+     * Devuelve la hora en la que empezó el intervalo de dos horas
+     * con mas accesos al servidor
+     */
+    public int busiestTwoHours(){
+        int hour = 0;
+        int cont = 0;
+        int sumHour = 0;
+        
+        if(hourlyused){
+            while(cont < (hourCounts.length - 1)){
+                if((hourCounts[cont] + hourCounts[cont+1])>sumHour){
+                    sumHour = hourCounts[cont] + hourCounts[cont+1];
+                    hour = cont;
+                }
+                cont++;
+            }
+            
+        }
+        return hour;
+    }
 
     /**
      * Print the hourly counts.
