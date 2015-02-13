@@ -80,6 +80,24 @@ public class LogEntry implements Comparable<LogEntry>
     {
         return dataValues[MINUTE];
     }
+    /**
+     * Return the day
+     */
+    public int getDay(){
+        return dataValues[DAY];
+    }
+    /**
+     * Return the month
+     */
+    public int getMonth(){
+        return dataValues[MONTH];
+    }
+    /**
+     * Return de Year
+     */
+    public int getYear(){
+        return dataValues[YEAR];
+    }
     
     /**
      * Create a string representation of the data.

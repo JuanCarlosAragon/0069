@@ -11,7 +11,7 @@ public class LogAnalyzer
     private int[] hourCounts;
     // Use a LogfileReader to access the data.
     private LogfileReader reader;
-    
+    //Define cuando ha sido usado el metodo analyzeHourlyData
     private boolean hourlyused;
 
     /**
