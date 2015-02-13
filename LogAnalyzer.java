@@ -27,15 +27,17 @@ public class LogAnalyzer
         // Create the reader to obtain the data.
         reader = new LogfileReader();
         
+        dayCounts = new int[32];
+        
         hourlyused = false;
     }
     /**
      * Constructor con el nombre de archivo a analizar como parametro
      */
     public LogAnalyzer(String nombre){
-        LogfileCreator creator = new LogfileCreator();
-        creator.createFile(nombre,10);
         hourCounts = new int[24];
+        dayCounts = new int[32];
+        
         reader = new LogfileReader(nombre);
         
         hourlyused = false;
@@ -51,6 +53,26 @@ public class LogAnalyzer
             LogEntry entry = reader.next();
             int hour = entry.getHour();
             hourCounts[hour]++;
+        }
+    }
+    /**
+     * Analiza los accesos por dia del mes
+     */
+    public void analyzeDailyData(){
+        while(reader.hasNext()){
+            LogEntry entry = reader.next();
+            int day = entry.getDay();
+            dayCounts[day]++;
+        }
+    }
+    /**
+     * Imprime por pantalla la cantidad de accesos por dia del mes
+     */
+    public void printDailyCounts(){
+        int cont = 1;
+        while(cont<dayCounts.length){
+            System.out.println("Dia " + cont + ": " + dayCounts[cont] + " accesos.");
+            cont++;
         }
     }
     /**
