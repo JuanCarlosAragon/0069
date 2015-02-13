@@ -20,11 +20,11 @@ public class LogEntry implements Comparable<LogEntry>
     // At which index in dataValues the different fields
     // from a log line are stored.
     private static final int YEAR = 0, MONTH = 1, DAY = 2,
-                             HOUR = 3, MINUTE = 4;
+                             HOUR = 3, MINUTE = 4, STATUS = 5;
     // The number of fields. If more fields are added, e.g. for
     // seconds or a status code, then this value must be increased
     // to match.
-    private static final int NUMBER_OF_FIELDS = 5;
+    private static final int NUMBER_OF_FIELDS = 6;
                       
     /**
      * Decompose a log line so that the individual fields
@@ -50,8 +50,9 @@ public class LogEntry implements Comparable<LogEntry>
      * @param day The day (1-31)
      * @param hour The hour (0-23)
      * @param minute The minute (0-59)
+     * @param status the status (200/403/404)
      */
-    public LogEntry(int year, int month, int day, int hour, int minute)
+    public LogEntry(int year, int month, int day, int hour, int minute, int status)
     {
         // The array to store the data for a single line.
         dataValues = new int[NUMBER_OF_FIELDS];
@@ -60,6 +61,7 @@ public class LogEntry implements Comparable<LogEntry>
         dataValues[DAY] = day;
         dataValues[HOUR] = hour;
         dataValues[MINUTE] = minute;
+        dataValues[STATUS] = status;
         setWhen();
     }
     
@@ -98,7 +100,12 @@ public class LogEntry implements Comparable<LogEntry>
     public int getYear(){
         return dataValues[YEAR];
     }
-    
+    /**
+     * Return the status
+     */
+    public int getStatus(){
+        return dataValues[STATUS];
+    }
     /**
      * Create a string representation of the data.
      * This is not necessarily identical with the
@@ -152,7 +159,7 @@ public class LogEntry implements Comparable<LogEntry>
         // Adjust from 1-based month and day to 0-based.
         when.set(dataValues[YEAR],
                  dataValues[MONTH] - 1, dataValues[DAY] - 1,
-                 dataValues[HOUR], dataValues[MINUTE]);
+                 dataValues[HOUR], dataValues[MINUTE], dataValues[STATUS]);
     }
     
 }

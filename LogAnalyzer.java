@@ -11,6 +11,8 @@ public class LogAnalyzer
     private int[] hourCounts;
     //Cantidad de entradas en un determinado dia.
     private int[] dayCounts;
+    //Cantidad de accesos exitosos por dia.
+    private int[] succesfullAccesHour;
     // Use a LogfileReader to access the data.
     private LogfileReader reader;
     //Define cuando ha sido usado el metodo analyzeHourlyData
@@ -29,6 +31,8 @@ public class LogAnalyzer
         
         dayCounts = new int[32];
         
+        succesfullAccesHour = new int[24];
+        
         hourlyused = false;
     }
     /**
@@ -37,6 +41,7 @@ public class LogAnalyzer
     public LogAnalyzer(String nombre){
         hourCounts = new int[24];
         dayCounts = new int[32];
+        succesfullAccesHour = new int[24];
         
         reader = new LogfileReader(nombre);
         
@@ -63,6 +68,29 @@ public class LogAnalyzer
             LogEntry entry = reader.next();
             int day = entry.getDay();
             dayCounts[day]++;
+        }
+    }
+    /**
+     * Analiza los accesos correctos por hora
+     */
+    public void analyzeSuccesfullHour(){
+        while(reader.hasNext()){
+            LogEntry entry = reader.next();
+            if(entry.getStatus() == 200){
+                int hour = entry.getHour();
+                succesfullAccesHour[hour]++;
+            }
+        }
+    }
+    /**
+     * Imprime por pantalla la cantidad de accesos conseguidos por hora
+     * 
+     */
+    public void printSuccesfullAccess(){
+        int cont = 0;
+        while(cont < succesfullAccesHour.length){
+            System.out.println("Hora " + cont + ": " + succesfullAccesHour[cont] + " accesos.");
+            cont++;
         }
     }
     /**
