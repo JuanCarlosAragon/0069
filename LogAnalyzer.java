@@ -11,6 +11,8 @@ public class LogAnalyzer
     private int[] hourCounts;
     // Use a LogfileReader to access the data.
     private LogfileReader reader;
+    
+    private boolean hourlyused;
 
     /**
      * Create an object to analyze hourly web accesses.
@@ -22,6 +24,8 @@ public class LogAnalyzer
         hourCounts = new int[24];
         // Create the reader to obtain the data.
         reader = new LogfileReader();
+        
+        hourlyused = false;
     }
     /**
      * Constructor con el nombre de archivo a analizar como parametro
@@ -31,6 +35,8 @@ public class LogAnalyzer
         creator.createFile(nombre,10);
         hourCounts = new int[24];
         reader = new LogfileReader(nombre);
+        
+        hourlyused = false;
     }
 
     /**
@@ -38,11 +44,28 @@ public class LogAnalyzer
      */
     public void analyzeHourlyData()
     {
+        hourlyused = true;
         while(reader.hasNext()) {
             LogEntry entry = reader.next();
             int hour = entry.getHour();
             hourCounts[hour]++;
         }
+    }
+    /**
+     * Devuelve el numero total de accesos al servidor registrados 
+     * en el archivo.
+     */
+    public int numberOfAccesses(){
+        int contAcces = 0;
+        int contHour = 0;
+        if(hourlyused){
+            while(contHour < hourCounts.length){
+                contAcces += hourCounts[contHour];
+                contHour++;
+            }
+        }
+        return contAcces;
+        
     }
 
     /**
