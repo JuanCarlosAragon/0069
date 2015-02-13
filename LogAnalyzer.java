@@ -88,6 +88,27 @@ public class LogAnalyzer
         }
         return hour;
     }
+    
+    /**
+     * Devuelve la hora en la que se registraron menos entradas al
+     * servidor
+     */
+    public int quietestHour(){
+        int hour = 0;
+        int cont = 0;
+        int minCount = hourCounts[busiestHour()];
+     
+        if(hourlyused){
+            while(cont < hourCounts.length){
+                if(hourCounts[cont] < minCount){
+                    minCount = hourCounts[cont];
+                    hour = cont;
+                }
+                cont++;
+            }
+        }
+        return hour;
+    }
 
     /**
      * Print the hourly counts.
