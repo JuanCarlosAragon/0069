@@ -9,6 +9,8 @@ public class LogAnalyzer
 {
     // Where to calculate the hourly access counts.
     private int[] hourCounts;
+    //Cantidad de entradas en un determinado dia.
+    private int[] dayCounts;
     // Use a LogfileReader to access the data.
     private LogfileReader reader;
     //Define cuando ha sido usado el metodo analyzeHourlyData
@@ -154,5 +156,20 @@ public class LogAnalyzer
         reader.printData();
     }
     
-    
+    /**
+     * Analyze the  hourly accesses in  the given date
+     * 
+     * @param day The given day
+     * @param month The given month
+     * @param year The given year
+     */
+    public void analyzeDate(int year, int month, int day){
+       while(reader.hasNext()){
+           LogEntry entry = reader.next();
+           if((year == entry.getYear()) && (month == entry.getMonth()) && (day == entry.getDay())){
+               int hour = entry.getHour();
+               hourCounts[hour]++;
+            }
+        }
+    }
 }
